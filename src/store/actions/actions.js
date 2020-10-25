@@ -33,8 +33,46 @@ export function itemsFetchData(url) {
       })
       .then((items) => {
         dispatch(itemsFetchDataSuccess(items));
-        dispatch(itemsIsLoading(false));
       })
-      .catch(() => dispatch(itemsHasErrored(true)));
+      .catch(() => dispatch(itemsHasErrored(true)))
+      .finally(() => dispatch(itemsIsLoading(false)));
   };
 }
+
+/* 
+export const itemsFetchData2 = (url) => (dispatch) => {
+  dispatch(itemsIsLoading(true));
+
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      return response.json();
+    })
+    .then((items) => {
+      dispatch(itemsFetchDataSuccess(items));
+    })
+    .catch(() => dispatch(itemsHasErrored(true)))
+    .finally(() => dispatch(itemsIsLoading(false)));
+}; 
+ */
+
+/* 
+export const itemsFetchData3 = (url) => async (dispatch) => {
+  dispatch(itemsIsLoading(true));
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    const items = await response.json();
+    dispatch(itemsFetchDataSuccess(items));
+  } catch (e) {
+    dispatch(itemsHasErrored(true));
+  } finally {
+    dispatch(itemsIsLoading(false));
+  }
+};
+ */
